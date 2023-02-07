@@ -45,5 +45,16 @@ public class UserDaoService {
 
     }
 
+    public void deleteById(int id) {
+        Predicate<User> predicate =  user->user.getId()==id;
+
+        User userFound=users.stream().filter(predicate).findFirst().orElse(null);
+        if (userFound==null){
+            throw new UserNotFoundException("id:"+id);
+        } else {
+           users.removeIf(predicate);
+        }
+
+    }
 
 }
