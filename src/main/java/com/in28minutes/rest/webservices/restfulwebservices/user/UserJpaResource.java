@@ -100,4 +100,22 @@ public class UserJpaResource {
     }
 
 
+    @GetMapping("/jpa/users/{id}/posts/{post_id}")
+    public Post retrievePostsForUserById(@PathVariable int id,@PathVariable int post_id){
+        User userFound=this.userRepository.findById(id).orElse(null);
+
+        if (userFound==null){
+            throw new UserNotFoundException("user_id:"+id);
+        }
+
+        Post postFound=this.postRepository.findById(post_id).orElse(null);
+        if (postFound==null){
+            throw new PostNotFoundException("post_id:"+post_id);
+        }
+
+
+        return postFound;
+
+    }
+
 }
